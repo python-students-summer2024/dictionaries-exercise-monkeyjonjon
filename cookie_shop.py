@@ -28,6 +28,8 @@ def bake_cookies(filepath):
             cookie_info_baked.append(string)
         cookie_id = cookie_info_baked[0]
         cookie_title = cookie_info_baked[1]
+        if cookie_title[-1] != 's':
+            cookie_title = cookie_title + 's'
         cookie_description = cookie_info_baked[2]
         cookie_price = cookie_info_baked[3]
         if '$' in cookie_price:
@@ -114,16 +116,18 @@ def solicit_quantity(id, cookies):
     cookie_title = cookie['title']
     cookie_price = cookie['price']
     while getting_quantity:
-        quantity_input = input(f"\nMy favorite! How many {cookie_title}s would you like? ")
+        quantity_input = input(f"\nMy favorite! How many {cookie_title} would you like? ")
         if quantity_input.isdigit():
             cookie_quantity = int(quantity_input)
             getting_quantity = False
     total_price = cookie_price * cookie_quantity
     total_price = format(total_price, '.2f')
     if cookie_quantity == 1:
+        if cookie_title[-1] == 's':
+            cookie_title = cookie_title[:-1]
         print(f"Your subtotal for 1 {cookie_title} is ${total_price}.\n")
     else:
-        print(f"Your subtotal for {cookie_quantity} {cookie_title}s is ${total_price}.\n")
+        print(f"Your subtotal for {cookie_quantity} {cookie_title} is ${total_price}.\n")
     return cookie_quantity
 
 def solicit_order(cookies):
@@ -194,9 +198,11 @@ def display_order_total(order, cookies):
         cookie_price = cookie['price']
         total_cost += cookie_price * cookie_quantity
         if cookie_quantity == 1:
+            if cookie_title[-1] == 's':
+                cookie_title = cookie_title[:-1]
             print(f"-{cookie_quantity} {cookie_name}")
         else:
-            print(f"-{cookie_quantity} {cookie_name}s")
+            print(f"-{cookie_quantity} {cookie_name}")
     total_cost = format(total_cost, '.2f')
     print(f"Your total is ${total_cost}.\nPlease pay with Bitcoin before picking-up.\n")
     print("Thank you!\n-The Python Cookie Shop Robot.\n")
